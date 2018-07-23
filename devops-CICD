@@ -435,5 +435,13 @@ drwxr-xr-x.  5 root root  122 Jul 23 12:19 .
 drwxr-xr-x. 10 root root  258 Jul 23 12:19 target
 drwxr-xr-x.  8 root root  163 Jul 23 12:19 .git
 
-
+# su - jenkins
+# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+# ls -lrt .ssh/id_rsa*
+# cat .ssh/id_rsa.pub
+# eval "$(ssh-agent -s)"
+# ssh-add -k ~/.ssh/id_rsa
+# git config --global user.name "jenkins"
+# git config --global user.name "keshav.kummari@gmail.com"
+    
 
