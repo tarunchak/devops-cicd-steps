@@ -1,0 +1,335 @@
+D:\Users\chkummar\Downloads
+
+λ ssh -i "cloudcicd.pem" ec2-user@ec2-107-21-165-205.compute-1.amazonaws.com
+The authenticity of host 'ec2-107-21-165-205.compute-1.amazonaws.com (107.21.165.205)' can't be established.
+ECDSA key fingerprint is SHA256:LsVEbNQ9pb+yy0vS4R8qMrZBK2mkjmJvdIKLiImNlXw.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'ec2-107-21-165-205.compute-1.amazonaws.com,107.21.165.205' (ECDSA) to the list of known hosts.
+
+[ec2-user@ip-172-31-23-122 ~]$ sudo su -
+
+
+[root@ip-172-31-23-122 ~]# yum install java-1.8* -y
+
+[root@ip-172-31-23-122 ~]# java -version
+openjdk version "1.8.0_171"
+OpenJDK Runtime Environment (build 1.8.0_171-b10)
+OpenJDK 64-Bit Server VM (build 25.171-b10, mixed mode)
+[root@ip-172-31-23-122 ~]# ls -lrt .bash_profile
+-rw-r--r--. 1 root root 176 Dec 29  2013 .bash_profile
+[root@ip-172-31-23-122 ~]#
+
+
+# vim /etc/profile
+# vim /etc/bashrc
+# vim .bash_profile
+
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/"
+export JRE_HOME="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/jre"
+export PATH=$PATH:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/bin:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/jre/bin
+
+[root@ip-172-31-23-122 ~]# source .bash_profile
+[root@ip-172-31-23-122 ~]# source /etc/bashrc
+[root@ip-172-31-23-122 ~]# source /etc/profile
+[root@ip-172-31-23-122 ~]# java -version
+
+# yum install wget* vim* curl* elinks* unzip* -y
+
+# wget http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+
+# unzip apache-maven-3.5.4-bin.zip
+
+# mv apache-maven-3.5.4 maven
+
+[root@ip-172-31-23-122 ~]# ls -lrt /etc/profile.d/maven.sh
+-rw-r--r--. 1 root root 96 Jul 23 10:48 /etc/profile.d/maven.sh
+
+[root@ip-172-31-23-122 ~]# ls -lrt /root/.bash_profile
+-rw-r--r--. 1 root root 591 Jul 23 10:47 /root/.bash_profile
+
+[root@ip-172-31-23-122 ~]# cat /etc/profile.d/maven.sh
+export MAVEN_HOME=/root/maven/
+export M2_HOME=$MAVEN_HOME/bin
+export PATH=$PATH:$MAVEN_HOME/bin
+
+[root@ip-172-31-23-122 ~]# cat /root/.bash_profile
+export MAVEN_HOME=/root/maven/
+export M2_HOME=$MAVEN_HOME/bin
+export PATH=$PATH:$MAVEN_HOME/bin
+
+# vim /etc/bashrc
+export MAVEN_HOME=/root/maven/
+export M2_HOME=$MAVEN_HOME/bin
+export PATH=$PATH:$MAVEN_HOME/bin
+
+
+[root@ip-172-31-23-122 ~]# mvn -version
+Apache Maven 3.5.4 (1edded0938998edf8bf061f1ceb3cfdeccf443fe; 2018-06-17T18:33:14Z)
+Maven home: /root/maven
+Java version: 1.8.0_171, vendor: Oracle Corporation, runtime: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "3.10.0-862.el7.x86_64", arch: "amd64", family: "unix"
+
+
+Tomcat :
+# wget http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz
+# tar xvzf apache-tomcat-8.5.32.tar.gz
+# mv apache-tomcat-8.5.32 tomcat
+
+[root@ip-172-31-23-122 tomcat]# grep -H -n "127" webapps/host-manager/META-INF/context.xml
+webapps/host-manager/META-INF/context.xml:20:         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|.*" />
+
+[root@ip-172-31-23-122 tomcat]# vim webapps/manager/META-INF/context.xml
+
+[root@ip-172-31-23-122 tomcat]# grep -H -n "127" webapps/manager/META-INF/context.xml
+webapps/manager/META-INF/context.xml:20:         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|.*" />
+
+[root@ip-172-31-23-122 tomcat]# cd conf/  
+                                           
+[root@ip-172-31-23-122 conf]# vim server.xml                                         
+
+[root@ip-172-31-23-122 conf]# grep -H -n 8181 server.xml                             
+server.xml:69:    <Connector port="8181" protocol="HTTP/1.1"                         
+
+[root@ip-172-31-23-122 conf]# vim tomcat-users.xml                                   
+
+[root@ip-172-31-23-122 conf]# tail -5 tomcat-users.xml                               
+  <role rolename="admin-gui"/>                                                       
+  <role rolename="manager-gui"/>                                                     
+  <user username="admin" password="redhat@123" roles="admin-gui,manager-gui"/>       
+                                                                                     
+</tomcat-users>                                                                      
+
+[root@ip-172-31-23-122 conf]# cd ../bin
+[root@ip-172-31-23-122 bin]# ./startup.sh
+Using CATALINA_BASE:   /root/tomcat
+Using CATALINA_HOME:   /root/tomcat
+Using CATALINA_TMPDIR: /root/tomcat/temp
+Using JRE_HOME:        /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64/jre
+Using CLASSPATH:       /root/tomcat/bin/bootstrap.jar:/root/tomcat/bin/tomcat-juli.jar
+Tomcat started.
+
+Tomcat UI : http://107.21.165.205:8181/
+
+UserName : admin 
+PassWord : redhat@123
+
+Jfrog :
+
+# cp -pv /home/ec2-user/jfrog-artifactory-oss-6.1.0.zip .
+
+# unzip jfrog-artifactory-oss-6.1.0.zip
+
+# mv artifactory-oss-6.1.0/ artifactory
+
+# cd artifactory
+
+# cd artifactory/bin
+
+# ./artifactory.sh 
+
+Jfrog UI : http://107.21.165.205:8081/
+
+UserName : admin 
+PassWord : redhat@123
+
+Maven & Jfrog Integration :
+
+# mkdir .m2
+[root@ip-172-31-23-122 ~]# cp -pv /home/ec2-user/settings* .
+
+[root@ip-172-31-23-122 .m2]# ls -lrt
+-rw-rw-r--. 1 ec2-user ec2-user 1297 Jul 23 11:53 settings.xml
+-rw-rw-r--. 1 ec2-user ec2-user  128 Jul 23 11:53 settings-security.xml
+
+[root@ip-172-31-23-122 .m2]# mvn -emp redhat@123
+{qkYk59aGM1kHHZFCbaKQSQ/nJK3nN5BEGcaeyZCIDLI=}
+
+# mvn --encrypt-password redhat@123
+
+[root@ip-172-31-23-122 .m2]# grep -H -n "master" settings*
+settings-security.xml:3:  <master>{qkYk59aGM1kHHZFCbaKQSQ/nJK3nN5BEGcaeyZCIDLI=}</master>
+[root@ip-172-31-23-122 .m2]#
+[root@ip-172-31-23-122 .m2]# grep -H -n "password" settings*
+settings.xml:40:      <password>{qkYk59aGM1kHHZFCbaKQSQ/nJK3nN5BEGcaeyZCIDLI=}</password>
+settings.xml:45:      <password>{qkYk59aGM1kHHZFCbaKQSQ/nJK3nN5BEGcaeyZCIDLI=}</password>
+
+# mvn clean
+
+# mvn help:describe
+
+# mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-help-plugin
+  
+[root@ip-172-31-23-122 ~]# ls -lrt /root/.m2/
+total 8
+-rw-rw-r--.  1 ec2-user ec2-user  144 Jul 23 12:00 settings-security.xml
+-rw-rw-r--.  1 ec2-user ec2-user 1337 Jul 23 12:00 settings.xml
+drwxr-xr-x. 15 root     root      218 Jul 23 12:28 repository
+[root@ip-172-31-23-122 ~]# ls -lrt /root/.m2/repository/
+total 0
+drwxr-xr-x.  3 root root  19 Jul 23 12:28 junit
+drwxr-xr-x.  3 root root  25 Jul 23 12:28 classworlds
+drwxr-xr-x.  3 root root  33 Jul 23 12:28 commons-collections
+drwxr-xr-x.  3 root root  26 Jul 23 12:28 commons-lang
+drwxr-xr-x.  3 root root  16 Jul 23 12:28 net
+drwxr-xr-x.  3 root root  24 Jul 23 12:28 commons-io
+drwxr-xr-x.  3 root root  27 Jul 23 12:28 commons-codec
+drwxr-xr-x.  4 root root  40 Jul 23 12:28 com
+drwxr-xr-x.  3 root root  21 Jul 23 12:28 xmlpull
+drwxr-xr-x.  3 root root  22 Jul 23 12:28 xpp3
+drwxr-xr-x.  3 root root  26 Jul 23 12:28 junit-addons
+drwxr-xr-x.  4 root root  45 Jul 23 12:28 xerces
+drwxr-xr-x. 11 root root 140 Jul 23 12:28 org
+
+Jenkins :
+
+Installing from the Repo
+Now, run the following to download Jenkins from the Red Hat repo:
+
+# sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+
+Then, import the verification key using the package manager RPM:
+
+# sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+Start Jenkins as a service:
+
+# sudo systemctl enable jenkins.service
+# sudo systemctl start jenkins.service
+# sudo systemctl status jenkins.service
+
+Jenkins UI : http://107.22.139.14:8080/
+
+Jenkins Password : 
+[root@ip-172-31-23-122 ~]# cat /var/lib/jenkins/secrets/initialAdminPassword
+2afdf970677c4926b21393c055f20a27
+
+http://107.22.139.14:8080/
+
+UserName : admin 
+PassWord : redhat@123
+
+GitHub :
+
+https://github.com
+
+UserName : keshav.kummari@gmail.com
+PassWord : 
+
+
+Create a Repo : https://github.com/keshavkummari/devops
+
+Upload Sample Java Code :
+
+[root@ip-172-31-23-122 ~]# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:hmh5ihR+QagkEG5P5CTwZvRMdkLpnBF8lK2V+ihYELQ keshav.kummari@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|*++BB+oo .       |
+|o+BB+oo +        |
+|o+E*++ +         |
+|o+o.=+o.         |
+|  o+= ooS        |
+| ..+.o...        |
+|  . ..           |
+|                 |
+|                 |
++----[SHA256]-----+
+
+[root@ip-172-31-23-122 ~]# ls -lrt /root/.ssh/id_rsa*
+-rw-r--r--. 1 root root  750 Jul 23 12:20 /root/.ssh/id_rsa.pub
+-rw-------. 1 root root 3243 Jul 23 12:20 /root/.ssh/id_rsa
+
+Upload Public Key to GitHub :
+
+[root@ip-172-31-23-122 ~]# cat /root/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEEVok2gnRMAjrpPB/nTwQBVb7xNrtC0uLHUngsYYUKMXhgKY24L/
+38oXweCOh98mUap9CPH8yxGYWdFFpM+XHjOCC4iZeuCaH+ytUfH3w4B+P3WneguDXrUEQFrYgpDetM1vutrF/
+rsxKh6cFbn9UoJOW2QMAfhwfQ3bCRNVZsdWQn9oA6i9EW4aT6Du4rIuNCuSfEnU0JOimgtZS0o17yHaaBEsEj31
++Br1cwU80UjqDKSFDUx9RLZZ/MNBvW+dYCJIW7FetllVd3x7MHPUQMKGhmW8ixlr41Wd921R9O8YBDUlYky26IxMKkpM2
+eidjXqSoDqHLZop4+RDVvWjStDNjX1+Xun2Ss1JRmLLNFC4txHtUCyL588Z+sTh44AUELPi6vyCALWuNDN3mXrUdBOosmFUV
+taKRa+iUUTsA6hWa/lkC4QVRfF4GjkB2i/CZeCPuXidguZ37H2tOkOkbEsV5Ne3DD6q8bbF9BnTM6NPanIxQkKyuhgw/
+vMmW20kTy2cv3nmeYtzfG93+9R/CHn44hB/nA7Xpy6TTk+4gsnOGBimwp/XclnsckPSWDlkJQZjHLP7uKPXzQTIRjfcbFQ9q
+7VDtqnKMJzb6xxW101H0mmTmWd0Xuhkb7k42WATDqKTx9zM5HtdZmNOsrADZC1I57AKXLue1O0kl7CIVoQ== keshav.kummari@gmail.com
+
+Go to GitHub >> Settings >> SSH and GPG keys >> New SSH Key 
+
+[root@ip-172-31-23-122 ~]# eval "$(ssh-agent -s)"
+Agent pid 12403
+
+[root@ip-172-31-23-122 ~]# ssh-add -k ~/.ssh/id_rsa
+Identity added: /root/.ssh/id_rsa (/root/.ssh/id_rsa)
+
+Clone the Repo to Local Server :
+
+[root@ip-172-31-23-122 ~]# git config --global user.name "keshav.kummari"
+
+[root@ip-172-31-23-122 ~]# git config --global user.name "keshav.kummari@gmail.com"
+
+[root@ip-172-31-23-122 ~]# git clone https://github.com/keshavkummari/devops.git
+Cloning into 'devops'...
+remote: Counting objects: 186, done.
+remote: Compressing objects: 100% (117/117), done.
+remote: Total 186 (delta 42), reused 171 (delta 37), pack-reused 0
+Receiving objects: 100% (186/186), 35.81 MiB | 53.54 MiB/s, done.
+Resolving deltas: 100% (42/42), done.
+
+[root@ip-172-31-23-122 ~]# ls -ld devops/
+drwxr-xr-x. 5 root root 122 Jul 23 12:19 devops/
+
+[root@ip-172-31-23-122 ~]# ls -lrta devops/
+dr-xr-x---.  9 root root 4096 Jul 23 12:19 ..
+-rw-r--r--.  1 root root   45 Jul 23 12:19 README.md
+-rw-r--r--.  1 root root 3735 Jul 23 12:19 pom.xml
+-rw-r--r--.  1 root root 4994 Jul 23 12:19 mvnw.cmd
+-rwxr-xr-x.  1 root root 6468 Jul 23 12:19 mvnw
+-rw-r--r--.  1 root root 1374 Jul 23 12:19 JenkinsFile
+drwxr-xr-x.  4 root root   30 Jul 23 12:19 src
+drwxr-xr-x.  5 root root  122 Jul 23 12:19 .
+drwxr-xr-x. 10 root root  258 Jul 23 12:19 target
+drwxr-xr-x.  8 root root  163 Jul 23 12:19 .git
+
+
+Setup SSH and Maven Settings for Jenkin User:
+
+# su - jenkins 
+
+[root@ip-172-31-23-122 ~]# cp -pv /root/.m2/settings* .
+‘/root/.m2/settings-security.xml’ -> ‘./settings-security.xml’
+‘/root/.m2/settings.xml’ -> ‘./settings.xml’
+
+[root@ip-172-31-23-122 .m2]# pwd
+/var/lib/jenkins/.m2
+
+[root@ip-172-31-23-122 .m2]# ls -lrt
+-rw-rw-r--. 1 ec2-user ec2-user  144 Jul 23 12:00 settings-security.xml
+-rw-rw-r--. 1 ec2-user ec2-user 1265 Jul 23 14:19 settings.xml
+
+[root@ip-172-31-23-122 jenkins]# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+
+[root@ip-172-31-23-122 jenkins]# eval "$(ssh-agent -s)"
+Agent pid 12773
+
+[root@ip-172-31-23-122 jenkins]# ssh-add -k /var/lib/jenkins/.ssh/id_rsa
+Identity added: /var/lib/jenkins/.ssh/id_rsa (/var/lib/jenkins/.ssh/id_rsa)
+
+[root@ip-172-31-23-122 jenkins]# git config --global user.name "jenkins"
+
+[root@ip-172-31-23-122 jenkins]# git config --global user.email "keshav.kummari@gmail.com"
+
+
+Install and Configure Jenkins Plugins :
+
+1. Conditional Buildstep 
+2. Deploy to Container 
+3. Environment Injector 
+4. Git Parameter 
+5. GitHub Branch Source
+
