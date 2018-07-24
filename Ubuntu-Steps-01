@@ -1,0 +1,226 @@
+Download, Install & Configure Softwares on Ubuntu :
+#-------------------- Java --------------------------#
+
+# sudo apt-get update
+
+Optional :
+# sudo apt-get install default-jre
+# sudo apt-get install default-jdk
+
+# sudo add-apt-repository ppa:webupd8team/java
+# sudo apt-get update
+# sudo apt-get install oracle-java8-installer
+
+# sudo update-alternatives --config java
+
+# sudo vi /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+
+# source /etc/environment
+
+# echo $JAVA_HOME
+
+#-------------------- Maven --------------------------#
+
+# sudo wget http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+# sudo unzip apache-maven-3.5.4-bin.zip
+# sudo mv apache-maven-3.5.4 maven
+# sudo vi /etc/environment
+
+ubuntu@ip-172-31-85-15:/opt$ cat /etc/environment
+MAVEN_HOME=/opt/maven
+M2=$MAVEN_HOME/bin
+
+# source /etc/environment
+
+OR 
+
+# sudo apt install maven
+update-alternatives: using /usr/share/maven/bin/mvn to provide /usr/bin/mvn (mvn) in auto mode
+
+cat /etc/environment
+MAVEN_HOME=/usr/share/maven/
+M2=$MAVEN_HOME/bin
+
+# source /etc/environment
+# mvn -version
+#-------------------- Jfrog --------------------------#
+
+https://api.bintray.com/content/jfrog/artifactory-debs/pool/main/j/jfrog-artifactory-oss-deb/jfrog-artifactory-oss-$latest.deb;bt_package=jfrog-artifactory-oss-deb
+
+#------------- Download, Install & Configure Jfrog Artifactory on Ubuntu --------------#
+
+# wget https://api.bintray.com/content/jfrog/artifactory/jfrog-artifactory-oss-$latest.zip;bt_package=jfrog-artifactory-oss-zip
+
+# sudo cp -pv /home/ubuntu/jfrog-artifactory-oss-6.1.0.zip .
+
+# sudo unzip jfrog-artifactory-oss-6.1.0.zip
+
+# sudo mv artifactory-oss-6.1.0/ artifactory
+
+# /opt/artifactory/bin
+
+# sudo ./installService.sh
+
+# sudo systemctl start artifactory.service
+
+# sudo systemctl status artifactory.service
+
+#------------- Maven & Jfrog Artifactory Integration on Ubuntu --------------#
+
+# cd /home/ubuntu
+
+# mkdir .m2
+
+# Generate "settings.xml" & distributionManagement file by going to http://34.207.124.47:8081 
+
+# Copy the File to .m2 folder
+
+# pwd
+/home/ubuntu/.m2
+
+# ls -lrt
+settings.xml
+
+# cd /opt/
+
+# sudo git config --global user.name "keshavkummari"
+
+# sudo git config --global user.email "keshav.kummari@gmail.com"
+
+# sudo git clone https://github.com/keshavkummari/devops.git
+
+# cd /opt/devops
+
+# mvn clean
+
+# mvn help:describe
+
+# mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-help-plugin
+
+# mvn clean package deploy
+#------------- Download, Install & Configure Tomcat on Ubuntu ------------#
+
+# sudo wget http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz
+
+# sudo tar xvzf apache-tomcat-8.5.32.tar.gz
+
+# sudo mv apache-tomcat-8.5.32 tomcat
+
+# cd tomcat 
+
+# vim webapps/host-manager/META-INF/context.xml
+
+# vim webapps/manager/META-INF/context.xml
+
+# cd /opt/tomcat/conf 
+
+# vim tomcat-users.xml
+
+#------------- Download, Install & Configure Jenkins on Ubuntu ------------#
+# sudo wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+
+# sudo sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+# sudo apt-get update
+
+# sudo apt-get install jenkins
+
+# sudo vim /etc/default/jenkins
+
+# sudo service jenkins start
+
+#------------- Setup SSH for GitHub for user(Ubuntu) on Ubuntu -----------------#
+
+# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+
+# eval "$(ssh-agent -s)"
+Agent pid 2153
+
+# ssh-add -k ~/.ssh/id_rsa
+Identity added: /home/ubuntu/.ssh/id_rsa (/home/ubuntu/.ssh/id_rsa)
+
+# ssh -T git@github.com
+
+#------------- Setup SSH for GitHub for user(Jenkins) on Ubuntu --------------#
+
+# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+
+# eval "$(ssh-agent -s)"
+Agent pid 2153
+
+# ssh-add -k ~/.ssh/id_rsa
+Identity added: /home/ubuntu/.ssh/id_rsa (/home/ubuntu/.ssh/id_rsa)
+
+# ssh -T git@github.com
+
+# git config --global user.name "jenkins"
+
+# git config --global user.email "keshav.kummari@gmail.com"
+
+# sudo git clone https://github.com/keshavkummari/devops.git
+
+# cd devops
+
+# mvn clean
+
+# mvn help:describe
+
+# mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-help-plugin
+
+# mvn clean package deploy
+
+Build Path : /var/lib/jenkins/.m2/repository/com/example/devops/
+
+#------------- Install & Configure Jenkins Plugins on Ubuntu -----------#
+
+Jenkins Plugins :
+1. Conditional Buildstep
+2. Deploy to container 
+3. Environment Injector
+4. Git Parameter 
+5. GitHub Branch Source
+
+#------------- GitHub & Jenkins Interation on Ubuntu ------------#
+
+
+#--- Create a Maven Project on Jenkins & Configure GitHub Hooks on Ubuntu --#
+
+
+#--- Download, Install & Configure Kibana, Logstash & ElasticSerach on Ubuntu --#
+
+curl -O https://artifacts.elastic.co/downloads/kibana/kibana-6.3.1-amd64.deb
+
+# dpkg -i kibana-6.3.1-amd64.deb
+
+
+curl -O https://artifacts.elastic.co/downloads/logstash/logstash-6.3.1.deb
+
+# dpkg -i logstash-6.3.1.deb
+
+curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.1.deb
+
+# dpkg -i elasticsearch-6.3.1.deb
+
+# grep -E -H -n 'devops|primary' /etc/elasticsearch/elasticsearch.yml
+/etc/elasticsearch/elasticsearch.yml:17:cluster.name: devops
+/etc/elasticsearch/elasticsearch.yml:23:node.name: primary
+
+# systemctl status elasticsearch.service
+# systemctl enable elasticsearch.service
+# systemctl start elasticsearch.service
+
+
+wget https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-7.2.1.zip
+
+# unzip sonarqube-7.2.1.zip
+
+# mv sonarqube-7.2.1 sonarqube
+
+# cd sonarqube
+
+# linux-x86-64/
+
+# ./sonar.sh start
+
+http://54.208.11.47:9000/
