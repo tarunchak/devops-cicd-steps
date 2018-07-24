@@ -1,0 +1,19 @@
+#-------------------- Maven --------------------------#
+
+# sudo wget http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip
+# sudo unzip apache-maven-3.5.4-bin.zip
+# sudo mv apache-maven-3.5.4 maven
+# sudo vi /etc/environment
+
+ubuntu@ip-172-31-85-15:/opt$ cat /etc/environment
+MAVEN_HOME=/opt/maven
+M2=$MAVEN_HOME/bin
+
+# source /etc/environment
+
+OR 
+
+# sudo apt install maven
+update-alternatives: using /usr/share/maven/bin/mvn to provide /usr/bin/mvn (mvn) in auto mode
+# source /etc/environment
+# mvn -version
