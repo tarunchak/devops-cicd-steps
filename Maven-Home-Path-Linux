@@ -12,6 +12,7 @@ STEP-3 : Rename
 
 # mv apache-maven-3.5.4 maven
 
+#--------------Ignore-----------------------------#
 STEP-4 : Add Maven Home Path in /etc/environment file.
 
 # cat /etc/environment
@@ -23,6 +24,21 @@ export PATH=$PATH:$MAVEN_HOME/bin
 STEP-5 : Execute the configuration file:
 
 # source /etc/environment
+#--------------------------------------------------------#
+
+STEP-4 : Add Maven Home Path in /root/.bash_profile & /home/ec2-user/.bash_profile file.
+
+# cat /root/.bash_profile  
+# cat /home/ec2-user/.bash_profile
+
+export MAVEN_HOME=/opt/maven/
+export M2_HOME=$MAVEN_HOME/bin
+export PATH=$PATH:$MAVEN_HOME/bin
+
+STEP-5 : Execute the configuration file:
+
+# source /root/.bash_profile 
+# source /home/ec2-user/.bash_profile
 
 STEP-6 : Check the Apache Maven Version
 
