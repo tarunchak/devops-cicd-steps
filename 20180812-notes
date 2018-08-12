@@ -1,0 +1,63 @@
+
+EC2 - Linux Distribution(i.e. ubuntu)
+
+SSH to Ubuntu from Our Windows/MacOS
+
+Step-1: Java
+Step-2: Maven
+Step-3: Tomcat
+Step-4: Jfrog Artifactory
+Step-5: Jenkins
+Step-6: Maven & JFrog Artifactory Integration 
+Step-7: Cloned Java Project & Compiled, Build & Deployed a War File into "libs-snapshot-local"
+
+
+Agenda :
+
+1. How to create Java Code
+2. Server Side Scripting   : Java Programming, SQL
+3. Client Side Scripting   : Html, CSS, Java Script 
+4. Code, Compile, Build    : maven
+5. Push the Code to GitHub Repository
+6. Clone the Repo
+
+#------------- Setup SSH for GitHub for user(root) on Ubuntu -----------------#
+
+# ssh-keygen -t rsa -b 4096 -C "keshav.kummari@gmail.com"
+
+enter - 3-4 
+
+# cd .ssh/
+
+# cat id_rsa.pub
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5YyBIjyHj3Em9z6kt0hzPPFQEsqYu4zaWaIgTn9WEZM2hgjYC1ph+zW9ZJqhoem6M+olrj0LPhBO3yTQPifdtrVw0zEKMjQ/iac/MzCL/hYD31eHi3Kc1Iy4kAkUdHrXCoV2BzPK2b57oHroQ== keshav.kummari@gmail.com
+
+
+# eval "$(ssh-agent -s)"
+Agent pid 2153
+
+# ssh-add -k ~/.ssh/id_rsa
+Identity added: /root/.ssh/id_rsa (/root/.ssh/.ssh/id_rsa)
+
+# ssh -T git@github.com
+
+# sudo git config --global user.name "keshavkummari"
+
+# sudo git config --global user.email "keshav.kummari@gmail.com"
+
+# cd java001/ 
+
+# git status
+
+# git add .
+
+# git status
+
+# git commit -m "devops-project"
+
+# git status
+
+# git push -u origin master 
+
+# git status
