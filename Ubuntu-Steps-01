@@ -110,12 +110,26 @@ settings.xml
 # cd tomcat 
 
 # vim webapps/host-manager/META-INF/context.xml
+Change the line number 20 add '|.*', the line will be looks like as below
+allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|.*" />
+
 
 # vim webapps/manager/META-INF/context.xml
+Same as above file the change will be on Line number 20
 
 # cd /opt/tomcat/conf 
 
 # vim tomcat-users.xml
+You need copy Line 38,39,40 and make new roles and password like below on line
+ 44   <role rolename="admin-gui"/>
+ 45   <role rolename="manager-gui"/>
+ 46   <role rolename="manager-script"/>
+ 47   <user username="admin" password="redhat@123>" roles="admin-gui,manager-gui,manager-script"/>
+ 
+ #cd /opt/tomcat/bin
+
+#./startup.sh  (to run the Tomcat service)
+#ps -aux | grep tomcat (to check the tomcat is running)
 
 #------------- Download, Install & Configure Jenkins on Ubuntu ------------#
 # sudo wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
